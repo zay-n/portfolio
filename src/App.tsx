@@ -1,4 +1,5 @@
 import { useSmoothScroll } from './hooks/useSmoothScroll';
+import Cursor from './components/Cursor';
 import Nav from './components/Nav';
 import Hero from './components/Hero';
 import Facts from './components/Facts';
@@ -18,6 +19,7 @@ export default function App() {
       <a className="skip-link" href="#main">
         Skip to content
       </a>
+      <Cursor />
       <Nav />
       <main id="main">
         <Hero />
