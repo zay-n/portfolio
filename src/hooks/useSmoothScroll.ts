@@ -11,6 +11,15 @@ export function setScrollLocked(locked: boolean) {
   else lenis?.start();
 }
 
+/** Scroll to a section by id. */
+export function scrollToId(id: string) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  // Lenis already honours the page's scroll-padding-top, so no manual nav offset is needed.
+  if (lenis) lenis.scrollTo(el);
+  else el.scrollIntoView();
+}
+
 /** Smooth scrolling with anchor support. Falls back to native scrolling for reduced motion. */
 export function useSmoothScroll() {
   useEffect(() => {

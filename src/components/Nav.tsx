@@ -4,7 +4,7 @@ import { setScrollLocked } from '../hooks/useSmoothScroll';
 import { Download } from './Icons';
 import '../styles/nav.css';
 
-export default function Nav() {
+export default function Nav({ onOpenPalette }: { onOpenPalette: () => void }) {
   const [active, setActive] = useState('');
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -71,6 +71,10 @@ export default function Nav() {
             </a>
           ))}
         </nav>
+
+        <button type="button" className="nav__kbd" onClick={onOpenPalette} aria-label="Open command menu">
+          Menu <kbd>Ctrl K</kbd>
+        </button>
 
         <a className="nav__resume" href={resumeHref} download>
           Resume <Download width={14} height={14} />

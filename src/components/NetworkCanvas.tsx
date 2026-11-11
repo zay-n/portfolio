@@ -79,7 +79,9 @@ export default function NetworkCanvas() {
     let running = false;
     let last = 0;
     let angle = 0.6;
-    const pointer = { x: 0, y: 0, tx: 0, ty: 0 };
+    const pointer = { x: 0, y: 0, tx: 0, ty: 0, px: -9999, py: -9999 };
+    const ripples: { x: number; y: number; t: number }[] = [];
+    const REACH = 170;
 
     const resize = () => {
       const dpr = Math.min(window.devicePixelRatio || 1, 2);
@@ -158,6 +160,48 @@ export default function NetworkCanvas() {
         ctx.fill();
       }
 
+      // Nodes near the cursor link to it, so the mesh feels like it is routing through you.
+      if (pointer.px > -999) {
+        projected.forEach((p) => {
+          const dist = Math.hypot(p.x - pointer.px, p.y - pointer.py);
+          if (dist > REACH) return;
+          const strength = (1 - dist / REACH) * (0.3 + p.depth * 0.7);
+          ctx.strokeStyle = `rgba(195, 177, 255, ${strength * 0.75})`;
+          ctx.beginPath();
+          ctx.moveTo(p.x, p.y);
+          ctx.lineTo(pointer.px, pointer.py);
+          ctx.stroke();
+          ctx.fillStyle = `rgba(214, 200, 255, ${strength})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 3 * p.s, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
+      // A click sends a signal outward through the network.
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        const ripple = ripples[i];
+        ripple.t += dt * 0.9;
+        if (ripple.t > 1) {
+          ripples.splice(i, 1);
+          continue;
+        }
+        const r = ripple.t * 520;
+        ctx.strokeStyle = `rgba(155, 123, 255, ${(1 - ripple.t) * 0.35})`;
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.arc(ripple.x, ripple.y, r, 0, Math.PI * 2);
+        ctx.stroke();
+        projected.forEach((p) => {
+          const off = Math.abs(Math.hypot(p.x - ripple.x, p.y - ripple.y) - r);
+          if (off > 26) return;
+          ctx.fillStyle = `rgba(214, 200, 255, ${(1 - off / 26) * (1 - ripple.t)})`;
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, 4 * p.s, 0, Math.PI * 2);
+          ctx.fill();
+        });
+      }
+
       ctx.font = '500 10px "JetBrains Mono Variable", ui-monospace, monospace';
       nodes.forEach((n, i) => {
         const p = projected[i];
@@ -204,6 +248,16 @@ export default function NetworkCanvas() {
     const onPointer = (e: PointerEvent) => {
       pointer.tx = (e.clientX / window.innerWidth) * 2 - 1;
       pointer.ty = (e.clientY / window.innerHeight) * 2 - 1;
+      if (e.pointerType === 'mouse') {
+        const rect = canvas.getBoundingClientRect();
+        pointer.px = e.clientX - rect.left;
+        pointer.py = e.clientY - rect.top;
+      }
+    };
+    const onDown = (e: PointerEvent) => {
+      const rect = canvas.getBoundingClientRect();
+      if (reduced || e.clientY > rect.bottom || ripples.length > 4) return;
+      ripples.push({ x: e.clientX - rect.left, y: e.clientY - rect.top, t: 0 });
     };
     let onScreen = true;
     const onVisibility = () => (document.hidden || !onScreen ? stop() : start());
@@ -216,6 +270,7 @@ export default function NetworkCanvas() {
     io.observe(canvas);
     window.addEventListener('resize', resize);
     window.addEventListener('pointermove', onPointer, { passive: true });
+    window.addEventListener('pointerdown', onDown, { passive: true });
     document.addEventListener('visibilitychange', onVisibility);
     document.fonts?.ready.then(() => !running && draw(0));
 
@@ -224,6 +279,7 @@ export default function NetworkCanvas() {
       io.disconnect();
       window.removeEventListener('resize', resize);
       window.removeEventListener('pointermove', onPointer);
+      window.removeEventListener('pointerdown', onDown);
       document.removeEventListener('visibilitychange', onVisibility);
     };
   }, []);

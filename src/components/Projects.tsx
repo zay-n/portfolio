@@ -103,11 +103,20 @@ function CaseStudy({ project }: { project: FeaturedProject }) {
   );
 }
 
+/** Moves a soft light across whichever project visual is under the cursor. */
+function spotlight(e: React.PointerEvent) {
+  const visual = (e.target as Element).closest<HTMLElement>('.visual');
+  if (!visual) return;
+  const rect = visual.getBoundingClientRect();
+  visual.style.setProperty('--mx', `${e.clientX - rect.left}px`);
+  visual.style.setProperty('--my', `${e.clientY - rect.top}px`);
+}
+
 export default function Projects() {
   const [open, setOpen] = useState<string | null>(moreProjects[0].name);
 
   return (
-    <section className="projects section" id="work" aria-labelledby="work-title">
+    <section className="projects section" id="work" aria-labelledby="work-title" onPointerMove={spotlight}>
       <div className="container">
         <SectionHead
           id="work-title"

@@ -36,13 +36,13 @@
 
 .hero__main {
   align-self: end;
-  padding-block: clamp(48px, 9vh, 120px) clamp(36px, 6vh, 64px);
+  padding-block: clamp(28px, 5vh, 96px) clamp(24px, 4vh, 52px);
 }
 .hero__eyebrow {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: clamp(20px, 3vh, 32px);
+  margin-bottom: clamp(14px, 2.2vh, 28px);
   font-family: var(--font-mono);
   font-size: clamp(0.7rem, 1.6vw, 0.8rem);
   letter-spacing: 0.08em;
@@ -58,7 +58,7 @@
   flex-shrink: 0;
 }
 .hero__name {
-  font-size: clamp(3rem, 10.4vw, 9.75rem);
+  font-size: clamp(3rem, min(10.4vw, 17.5vh), 9.75rem);
   line-height: 0.92;
   letter-spacing: -0.05em;
   font-weight: 500;
@@ -91,7 +91,7 @@
   grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
   gap: clamp(24px, 6vw, 96px);
   align-items: start;
-  margin-top: clamp(32px, 6vh, 64px);
+  margin-top: clamp(22px, 3.6vh, 52px);
   max-width: 1080px;
 }
 .hero__headline {
@@ -99,7 +99,7 @@
   font-size: clamp(1.45rem, 2.5vw, 2.15rem);
   line-height: 1.15;
   letter-spacing: -0.025em;
-  max-width: 15ch;
+  max-width: 17ch;
 }
 .hero__intro p {
   color: var(--muted);
@@ -201,5 +201,89 @@
   }
   .hero__scroll {
     display: none;
+  }
+}
+
+/* Problem → built ticker */
+.solve {
+  position: relative;
+  display: block;
+  max-width: 400px;
+  margin-top: clamp(20px, 3vh, 30px);
+  padding: 14px 16px 16px;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius);
+  background: rgba(10, 10, 13, 0.62);
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.solve:hover,
+.solve:focus-visible {
+  border-color: var(--accent);
+}
+.solve__head {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--dim);
+}
+.solve__body {
+  display: grid;
+  gap: 6px;
+  min-height: 4.9em;
+  align-content: start;
+  animation: rise 0.6s var(--ease-out);
+}
+.solve__problem {
+  color: var(--muted);
+  font-size: 0.93rem;
+  line-height: 1.4;
+}
+.solve__built {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-display);
+  font-size: 1.12rem;
+  letter-spacing: -0.02em;
+  color: var(--accent-soft);
+}
+.solve__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--accent);
+  transform-origin: left;
+  animation: solve-timer 4.2s linear forwards;
+}
+.solve:hover .solve__bar,
+.solve:focus-visible .solve__bar {
+  animation-play-state: paused;
+}
+@keyframes solve-timer {
+  from {
+    transform: scaleX(0);
+  }
+}
+@media (max-width: 900px) {
+  .solve {
+    max-width: none;
+  }
+}
+
+/* Short laptop screens: keep the whole hero inside one viewport. */
+@media (max-height: 800px) and (min-width: 901px) {
+  .hero__name {
+    font-size: clamp(3rem, min(10.4vw, 14.5vh), 9.75rem);
+  }
+  .solve__body {
+    min-height: 4.4em;
   }
 }

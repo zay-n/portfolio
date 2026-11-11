@@ -417,3 +417,19 @@
 .dash__moves p .is-out::before {
   background: var(--accent);
 }
+
+/* Cursor-following light on project visuals (mouse only) */
+@media (hover: hover) {
+  .visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background: radial-gradient(340px circle at var(--mx, 50%) var(--my, -200px), rgba(170, 145, 255, 0.13), transparent 70%);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .visual:hover::after {
+    opacity: 1;
+  }
+}

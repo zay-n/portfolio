@@ -1,6 +1,7 @@
 import { profile, resumeHref } from '../data/profile';
 import Magnetic from './Magnetic';
 import NetworkCanvas from './NetworkCanvas';
+import ProblemTicker from './ProblemTicker';
 import { ArrowDown, Download, GitHub, LinkedIn, Mail } from './Icons';
 import '../styles/hero.css';
 
@@ -26,9 +27,10 @@ export default function Hero() {
         </h1>
 
         <div className="hero__row">
-          <p className="hero__headline rise" style={{ animationDelay: '520ms' }}>
-            {profile.headline}
-          </p>
+          <div className="rise" style={{ animationDelay: '520ms' }}>
+            <p className="hero__headline">{profile.headline}</p>
+            <ProblemTicker />
+          </div>
           <div className="hero__intro rise" style={{ animationDelay: '620ms' }}>
             <p>{profile.intro}</p>
             <div className="hero__cta">

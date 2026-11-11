@@ -9,11 +9,11 @@ export const profile = {
   firstLine: 'Muhammed',
   secondLine: 'Zayan Sameer',
   shortName: 'Zayan Sameer',
-  role: 'Computer Science Engineer',
-  focus: ['IoT', 'Cybersecurity', 'Blockchain'],
-  headline: 'Engineering trust into connected systems.',
+  role: 'Problem solver',
+  focus: ['CSE', 'IoT', 'Cybersecurity', 'Blockchain'],
+  headline: 'I turn real-world problems into working software.',
   intro:
-    'I’m a Computer Science Engineering student at P. A. College of Engineering, Mangalore, building software across web, mobile and hardware — from blockchain-backed healthcare access to inventory platforms and IoT automation.',
+    'I’m a problem solver first and a programmer second. I love bringing ideas to life, and the ones I chase hardest are problems people actually face. I study Computer Science Engineering at P. A. College of Engineering, Mangalore, and build across web, mobile and hardware.',
   availability: 'Open to internships & graduate roles',
   classOf: 'Class of 2027',
   location: 'Kerala, India',
@@ -25,6 +25,16 @@ export const profile = {
   },
 } as const;
 
+/** Real problems and what I built for each — cycled in the hero. */
+export const solved = [
+  { problem: 'Patient records out of reach during an emergency hospital transfer', built: 'ABEHA' },
+  { problem: 'Railway crossings that nobody can predict', built: 'RailBro' },
+  { problem: 'Stock and invoices for several companies, with different staff access', built: 'StockIT' },
+  { problem: 'License keys tracked by hand in a spreadsheet', built: 'WinAuth' },
+  { problem: 'Receipts printed and filed manually at the counter', built: 'WinSoft Print Station' },
+  { problem: 'Crops watered on guesswork instead of soil data', built: 'Plynt' },
+];
+
 export const facts = [
   { value: '4×', label: '1st-place finishes', detail: 'CTF, blockchain, Java, national tech quiz' },
   { value: '60+', label: 'Workshop participants', detail: 'Hands-on sessions led at ICSB' },
@@ -34,10 +44,10 @@ export const facts = [
 
 export const about = {
   statement:
-    'I like the unglamorous part of technology: making systems people can actually rely on. Sensors that report honestly, records that can’t be quietly edited, and software that still works on the day it matters.',
+    'I’m more of a problem solver than a programmer. I love bringing ideas to life, and the ones I can’t leave alone are the real problems people face every day. Code is simply the fastest way I know to fix them.',
   paragraphs: [
     'I’m studying for a B.E. in Computer Science and Engineering at P. A. College of Engineering, Mangalore (2023–2027), in a programme built around IoT, cybersecurity and blockchain. I went to school in Sharjah and I’m based in Kerala.',
-    'Most of what I build starts with somebody’s real workflow: a company tracking license keys in Excel, a counter handling receipts by hand, a hospital that can’t reach a patient’s records during a transfer. That has taken me across web (React, PHP), mobile (Flutter, Android), desktop (Python) and hardware (ESP8266).',
+    'Almost everything I build starts with a problem somebody already has: a company tracking license keys in Excel, a counter handling receipts by hand, a hospital that can’t reach a patient’s records during a transfer. That has taken me across web (React, PHP), mobile (Flutter, Android), desktop (Python) and hardware (ESP8266).',
     'I also build communities. I co-founded ICSB, my college’s IoT, Cybersecurity and Blockchain club, where I serve as Vice President, and I was selected as the AWS Student Builder Group Leader for the college.',
   ],
   principles: [
